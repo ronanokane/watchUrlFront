@@ -36,9 +36,9 @@ const ListWatchers=()=>{
 
     return (
         <Fragment>
-            <div class="container mt3">
+            <div className="container mt3">
             <h3>Urls being watched</h3>           
-            <table class="table">
+            <table className="table">
                 <thead>
                 <tr>
                     <th>JobNo</th>

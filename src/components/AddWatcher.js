@@ -1,12 +1,12 @@
 import React, {Fragment, useState, useEffect} from 'react' 
 import ChangesHistory from './ChangesHistory'
 
-const AddWatcher = ()=>{
+const AddWatcher = ({watchList, setWatchlist})=>{
     const [url, setUrl]= useState("https://keybase.io/ronanokane")
     const [xpath, setXPath] =useState("/html/body/div/div/div[5]/div/div[1]/div/div/div[1]/div/div[4]/a/text()")
     const [cookies, setCookies] = useState("")
 
-    const [watchList, setWatchlist] = useState([])
+    const [listening, setListening] = useState([])
 
     const onSubmitForm = async e => {
         e.preventDefault();
@@ -37,7 +37,8 @@ const AddWatcher = ()=>{
             const response = await fetch("http://localhost:4000/listWatchers")
             const watches = await response.json()
     
-            setWatchlist(watches)
+            if(JSON.stringify(watchList)!==JSON.stringify(watches))
+                setWatchlist(watches)
 
         } catch (error) {
             console.error(error.message)   
@@ -46,7 +47,7 @@ const AddWatcher = ()=>{
 
     useEffect(()=>{
         retrieveWatchers()
-    }, [])
+    },[watchList])
 
     return (
         <Fragment>           
@@ -63,7 +64,7 @@ const AddWatcher = ()=>{
             <br/>
             <h3>Watchlist:</h3> 
          
-            <table class="table table-striped">
+            <table className="table table-striped">
                 <thead>
                 <tr>
                     <th>JobNo</th>

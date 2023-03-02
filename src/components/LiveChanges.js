@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 
-const LiveChanges= ()=>{
+const LiveChanges= ({refreshWatchList})=>{
     const [changes, setChanges]= useState([])
     const [listening, setListening] = useState(false)
 
@@ -11,19 +11,18 @@ const LiveChanges= ()=>{
           events.onmessage = (event) => {
             const parsedData = JSON.parse(event.data);
 
-         //   console.log(`*${event.data}*`)
-    
             setChanges((changes)=>changes.concat(parsedData));
+            refreshWatchList()            
           };
     
           setListening(true);
         }
-      }, []);
+    });
     
-      return (
+    return (
         <>
         <h3>Live changes</h3>
-        <table class="table table-striped">
+        <table className="table table-striped">
           <thead>
             <tr>
               <th>Date</th>
@@ -44,7 +43,7 @@ const LiveChanges= ()=>{
           </tbody>
         </table>
         </>
-      );    
+    );    
 }
 
 export default LiveChanges
