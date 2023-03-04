@@ -1,6 +1,6 @@
 import React, {Fragment, useState, useEffect} from 'react' 
 
-const AddWatcher = ({watchList, refreshWatchers})=>{
+const AddWatcher = ({watchList, setWatchlist})=>{
     const [url, setUrl]= useState("https://keybase.io/ronanokane")
     const [xpath, setXPath] =useState("/html/body/div/div/div[5]/div/div[1]/div/div/div[1]/div/div[3]/text()")
     const [cookies, setCookies] = useState("")
@@ -9,12 +9,25 @@ const AddWatcher = ({watchList, refreshWatchers})=>{
         e.preventDefault();
         try {
             const body = {url, xpath, cookies}
-            let response = await fetch("http://localhost:4000/addWatcher",{
+            await fetch("http://localhost:4000/addWatcher",{
                 method:"POST",
                 headers: { "Content-Type": "application/json"},
                 body: JSON.stringify(body)
             })
-            refreshWatchers()
+            await refreshWatchers()
+
+        } catch (error) {
+            console.error(error.message)
+        }
+    }
+    async function refreshWatchers() {
+        try {
+            const response = await fetch("http://localhost:4000/listWatchers")
+            const watches = await response.json()
+    
+            if (JSON.stringify(watchList) !== JSON.stringify(watches))
+                setWatchlist(watches)            
+            
         } catch (error) {
             console.error(error.message)
         }

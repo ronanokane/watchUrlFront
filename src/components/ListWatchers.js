@@ -1,12 +1,18 @@
 import React, {Fragment} from 'react' 
 import ChangesHistory from './ChangesHistory'
 
-const ListWatchers=({watchList, refreshWatchers})=>{
+const ListWatchers=({watchList, setWatchlist})=>{
 
    const removeWatcher= async jobNo=>{
         try {
             await fetch(`http://localhost:4000/removeWatcher/${jobNo}`, {method: "DELETE"})
-            refreshWatchers()
+
+            const response = await fetch("http://localhost:4000/listWatchers")
+            const watches = await response.json()
+    
+            if(JSON.stringify(watchList)!==JSON.stringify(watches))
+                setWatchlist(watches)
+
         } catch (error) {
             console.error(error.message)
         }

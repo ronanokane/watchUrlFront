@@ -41,9 +41,7 @@ const ChangesHistory= ({jobNo}) =>{
                     </button>
                     <ul className="dropdown-menu">
                         {changes.map((change, index)=>(
-                            <>
-                                <li onClick={()=>setSelectedChange(change)}><a className="dropdown-item" href="#" key={index}>{change.date}</a></li>
-                            </>
+                            <li onClick={()=>setSelectedChange(change)} key={index}><a className="dropdown-item" href="#">{change.date}</a></li>
                         ))}
                     </ul>
 
