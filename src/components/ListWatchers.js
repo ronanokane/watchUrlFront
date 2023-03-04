@@ -11,7 +11,6 @@ const ListWatchers=({watchList, refreshWatchers})=>{
             console.error(error.message)
         }
     }   
-
     return (
         <>
          <h3>Watchlist:</h3> 

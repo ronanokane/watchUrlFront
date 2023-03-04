@@ -8,12 +8,12 @@ const LiveChanges= ()=>{
           const newChange = new Event("newChange");
     
           events.onmessage = (event) => {
-            const parsedData = JSON.parse(event.data);
+              const parsedData = JSON.parse(event.data);
 
-            setChanges((changes)=>changes.concat(parsedData));
-            document.dispatchEvent(newChange)     
-             
+              setChanges((changes)=>changes.concat(parsedData));
+              document.dispatchEvent(newChange)     
           };
+          
     }, []);
     
     return (
