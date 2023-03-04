@@ -3,11 +3,13 @@ import React, {Fragment, useState, useEffect} from 'react'
 const ChangesHistory= ({jobNo}) =>{
 
     const [changes, setChanges] = useState([])
+    const [selectedChange, setSelectedChange] = useState("")
 
     const loggedChanges= async ()=>{
         try {
             const response= await fetch(`http://localhost:4000/loggedChanges/${jobNo}`)
             setChanges(await response.json())
+            setSelectedChange(changes[0].change)
         } catch (error) {
             console.error(error.message)
         }
@@ -21,7 +23,7 @@ const ChangesHistory= ({jobNo}) =>{
     return (
         <>
             <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target={`#modal${jobNo}`}>
-            View Changes
+            Changes
             </button>
 
             <div className="modal" id={`modal${jobNo}`}>
@@ -34,12 +36,23 @@ const ChangesHistory= ({jobNo}) =>{
                 </div>
 
                 <div className="modal-body">
-                {changes.map((change)=>(
-                        <p>
-                        <p>{change.date}</p>{change.change}
-                        </p>
-                    )
-                )}
+                    <button type="button" className="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" style={{marginRight: "10px"}}>
+                        Date
+                    </button>
+                    <ul className="dropdown-menu">
+                        {changes.map((change, index)=>(
+                            <>
+                                <li onClick={()=>setSelectedChange(change)}><a className="dropdown-item" href="#" key={index}>{change.date}</a></li>
+                            </>
+                        ))}
+                    </ul>
+
+                        {selectedChange.date} 
+                    <br/>
+                    <br/>                                         
+                    <p>
+                        {selectedChange.change}                    
+                    </p>
                 </div>
 
                 <div className="modal-footer">
