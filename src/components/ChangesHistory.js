@@ -4,10 +4,9 @@ const ChangesHistory= ({jobNo}) =>{
 
     const [changes, setChanges] = useState([])
 
-    const loggedChanges= async (jobNo)=>{
+    const loggedChanges= async ()=>{
         try {
             const response= await fetch(`http://localhost:4000/loggedChanges/${jobNo}`)
-           // console.log(jobNo)
             setChanges(await response.json())
         } catch (error) {
             console.error(error.message)
@@ -16,13 +15,11 @@ const ChangesHistory= ({jobNo}) =>{
 
     useEffect( ()=>{
         loggedChanges(jobNo)
+        document.addEventListener("newChange", loggedChanges)        
     }, [])
 
-
-
     return (
-        <Fragment>
-           {/*  className="btn btn-primary" data-bs-toggle="modal" data-bs-target={`#modal${jobNo}`}  */}
+        <>
             <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target={`#modal${jobNo}`}>
             View Changes
             </button>
@@ -52,7 +49,7 @@ const ChangesHistory= ({jobNo}) =>{
                 </div>
             </div>
             </div>
-        </Fragment>
+        </>
     )
 }
 

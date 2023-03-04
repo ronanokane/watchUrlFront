@@ -1,23 +1,20 @@
 import React, { useState, useEffect } from "react"
 
-const LiveChanges= ({refreshWatchList})=>{
+const LiveChanges= ()=>{
     const [changes, setChanges]= useState([])
-    const [listening, setListening] = useState(false)
 
     useEffect( () => {
-        if (!listening) {
           const events = new EventSource('http://localhost:4000/changes');
+          const newChange = new Event("newChange");
     
           events.onmessage = (event) => {
             const parsedData = JSON.parse(event.data);
 
             setChanges((changes)=>changes.concat(parsedData));
-            refreshWatchList()            
+            document.dispatchEvent(newChange)     
+             
           };
-    
-          setListening(true);
-        }
-    });
+    }, []);
     
     return (
         <>

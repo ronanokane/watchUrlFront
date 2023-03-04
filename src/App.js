@@ -5,21 +5,15 @@ import AddWatcher from './components/AddWatcher'
 import LiveChanges from './components/LiveChanges';
 
 function App() {
-  const [watchList, setWatchlist] = useState([])
-
-  function refreshWatchList(){
-    setWatchlist([])
-  }
-
   return (
     <Fragment>
       <div>
       <div className="container p-5 my-5 border">
       <h2>WatchUrl</h2>
       <br></br>      
-      <AddWatcher watchList={watchList} setWatchlist={setWatchlist}/>
+      <AddWatcher/>
       <br/>
-      <LiveChanges refreshWatchList={refreshWatchList}/>
+      <LiveChanges/>
       </div>
       </div>
     </Fragment>
