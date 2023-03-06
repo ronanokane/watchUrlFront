@@ -36,16 +36,14 @@ const ChangesHistory= ({jobNo}) =>{
                 </div>
 
                 <div className="modal-body">
-                    <button type="button" className="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" style={{marginRight: "10px"}}>
+                    <button type="button" id="dateDropdown" className="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" style={{marginRight: "10px"}}>
                         Date
                     </button>
                     <ul className="dropdown-menu">
                         {changes.map((change, index)=>(
-                            <li onClick={()=>setSelectedChange(change)} key={index}><a className="dropdown-item" href="#">{change.date}</a></li>
+                            <li onClick={()=>{document.getElementById('dateDropdown').textContent=change.date;  setSelectedChange(change)}} key={index}><a className="dropdown-item" href="#">{change.date}</a></li>
                         ))}
                     </ul>
-
-                        {selectedChange?.date} 
                     <br/>
                     <br/>                                         
                     <p>
