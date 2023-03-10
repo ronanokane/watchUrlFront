@@ -3,21 +3,23 @@ import React, {Fragment, useState, useEffect} from 'react'
 const ChangesHistory= ({jobNo}) =>{
 
     const [changes, setChanges] = useState([])
-    const [selectedChange, setSelectedChange] = useState()
+    const [selectedChange, setSelectedChange] = useState({change: "", date: ""})
 
     const loggedChanges= async ()=>{
         try {
             const response= await fetch(`http://localhost:4000/loggedChanges/${jobNo}`)
-            setChanges(await response.json())
-            setSelectedChange(changes[0])
+            const changes=await response.json()
+            setChanges(changes)
+            return changes
         } catch (error) {
             console.error(error.message)
         }
     }
-
     useEffect( ()=>{
-        loggedChanges(jobNo)
-        document.addEventListener("newChange", loggedChanges)        
+        loggedChanges(jobNo).then(changes=>{
+            setSelectedChange(changes[0])
+        })
+        document.addEventListener("newChange", loggedChanges) 
     }, [])
 
     return (
@@ -37,7 +39,7 @@ const ChangesHistory= ({jobNo}) =>{
 
                 <div className="modal-body">
                     <button type="button" id="dateDropdown" className="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" style={{marginRight: "10px"}}>
-                        Date
+                        {selectedChange.date}
                     </button>
                     <ul className="dropdown-menu">
                         {changes.map((change, index)=>(
@@ -47,7 +49,7 @@ const ChangesHistory= ({jobNo}) =>{
                     <br/>
                     <br/>                                         
                     <p>
-                        <textarea value={selectedChange?.change} style={{  overflowY: "scroll", resize: "none", width: "100%", height: "240px"}} disabled />
+                        <textarea value={selectedChange.change} style={{  overflowY: "scroll", resize: "none", width: "100%", height: "240px"}} disabled />
                     </p>
                 </div>
 
