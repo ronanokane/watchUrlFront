@@ -47,7 +47,7 @@ const ChangesHistory= ({jobNo}) =>{
                     <br/>
                     <br/>                                         
                     <p>
-                        {selectedChange?.change}                    
+                        <textarea value={selectedChange?.change} style={{  overflowY: "scroll", resize: "none", width: "100%", height: "240px"}} disabled />
                     </p>
                 </div>
 
