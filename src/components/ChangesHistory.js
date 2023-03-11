@@ -16,10 +16,18 @@ const ChangesHistory= ({jobNo}) =>{
         }
     }
     useEffect( ()=>{
+
         loggedChanges(jobNo).then(changes=>{
             setSelectedChange(changes[0])
         })
-        document.addEventListener("newChange", loggedChanges) 
+
+        document.addEventListener("newChange", ()=>{
+            
+            loggedChanges()
+
+            if (Notification.permission === "granted") 
+                new Notification("watchUrl", {body: "Change detected..."});
+        }) 
     }, [])
 
     return (

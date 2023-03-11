@@ -49,6 +49,9 @@
           var myModal = new bootstrap.Modal(document.getElementById(modalId), {});
           myModal.show();
       }
+
+      if (Notification.permission !== "denied")Notification.requestPermission()  
+          
     </script>
   </body>
 </html>
