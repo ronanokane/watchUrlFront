@@ -15,9 +15,8 @@ const AddWatcher = ({watchList, setWatchlist})=>{
                 body: JSON.stringify(body)
             })
             await refreshWatchers()
-
         } catch (error) {
-            console.error(error.message)
+            alert('Is batchWatchUrl loaded ?')           
         }
     }
     async function refreshWatchers() {

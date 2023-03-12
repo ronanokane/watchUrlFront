@@ -22,9 +22,7 @@ const ChangesHistory= ({jobNo}) =>{
         })
 
         document.addEventListener("newChange", ()=>{
-            
             loggedChanges()
-
             if (Notification.permission === "granted") 
                 new Notification("watchUrl", {body: "Change detected..."});
         }) 
@@ -46,10 +44,10 @@ const ChangesHistory= ({jobNo}) =>{
                 </div>
 
                 <div className="modal-body">
-                    <button type="button" id="dateDropdown" className="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" style={{marginRight: "10px"}}>
+                    <button type="button" id="dateDropdown" className="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
                         {selectedChange.date}
                     </button>
-                    <ul className="dropdown-menu">
+                    <ul className="dropdown-menu" style={{maxHeight: "550px", overflow: "auto" }}>
                         {changes.map((change, index)=>(
                             <li onClick={()=>{document.getElementById('dateDropdown').textContent=change.date;  setSelectedChange(change)}} key={index}><a className="dropdown-item" href="#">{change.date}</a></li>
                         ))}
